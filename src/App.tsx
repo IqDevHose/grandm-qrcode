@@ -119,7 +119,7 @@ const App: React.FC = () => {
           </div>
         </div>
         {/* menu */}
-        <div className="overflow-y-auto h-[calc(100vh-250px)] pb-20 ">
+        <div className="overflow-y-auto h-[calc(100vh-250px)]  ">
           {searchQuery.trim() ? (
             filteredItems.length > 0 ? (
               filteredItems.map((item) => (
