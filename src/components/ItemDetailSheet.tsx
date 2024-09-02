@@ -7,6 +7,7 @@ import {
   SheetDescription,
 } from "./ui/sheet"; // Adjust import path as needed
 import { Item } from "../lib/types";
+import { useTranslation } from "react-i18next";
 
 interface ItemDetailSheetProps {
   item: Item;
@@ -20,7 +21,7 @@ const ItemDetailSheet: React.FC<ItemDetailSheetProps> = ({
   themeColor,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const {t} = useTranslation()
   const handleClose = () => {
     setIsOpen(false);
     setSelectedItem(null); // Clear selected item on close
@@ -33,12 +34,12 @@ const ItemDetailSheet: React.FC<ItemDetailSheetProps> = ({
           onClick={() => setIsOpen(true)} // Open the sheet on click
           className="flex items-center shadow-lg shadow-slate-200 p-5 rounded-3xl hover:shadow-lg mx-3 cursor-pointer bg-white"
         >
-          <div className="size-14 rounded-full   overflow-hidden border flex items-center justify-center mr-5">
+          <div className="size-14 rounded-full   overflow-hidden border flex items-center justify-center mx-5">
             <img src={item.image} alt={item.name} className="w-full object-contain" />
           </div>
           <div>
-            <h2 className="font-bold text-sm text-slate-700">{item.name}</h2>
-            <p className="text-slate-400">{item.price} IQD</p>
+            <h2 className="font-bold text-sm text-slate-700">{t(item.name)}</h2>
+            <p className="text-slate-400">{item.price.toLocaleString('en-US')} {t("IQD")}</p>
           </div>
         </div>
       </SheetTrigger>
@@ -47,27 +48,25 @@ const ItemDetailSheet: React.FC<ItemDetailSheetProps> = ({
           <div className="size-50 flex items-center justify-center object-contain">
             <img
               src={item.image}
-              alt={item.name}
+              alt={t(item.name)}
               className="w-full object-cover rounded-lg"
             />
           </div>
           <div className="text-center">
             <SheetTitle className="text-3xl font-semibold">
-              {item.name}
+              {t(item.name)}
             </SheetTitle>
             <p className="text-xl text-white mt-2">
               <span
                 style={{
-                  // backgroundColor: themeColor,
                   color: themeColor,
                 }}
-                className=""
               >
-                {item.price} IQD
+                {item.price.toLocaleString('en-US')} {t("IQD")}
               </span>
             </p>
             <SheetDescription className="text-sm text-gray-500 mt-4 ">
-              {item.description || "No details available."}
+              {t(item?.description || "No details available.")}
             </SheetDescription>
           </div>
           {/* Close Button */}
@@ -79,7 +78,7 @@ const ItemDetailSheet: React.FC<ItemDetailSheetProps> = ({
               onClick={handleClose}
               className="text-white py-3 px-14 rounded-full text-lg font-semibold transition"
             >
-              Close
+              {t("Close")}
             </button>
           </div>
         </div>
