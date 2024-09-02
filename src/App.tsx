@@ -61,26 +61,26 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="md:px-72 px-2 py-10 w-full h-screen overflow-hidden">
+      <div className="md:px-72 px-2 py-10 w-full h-screen overflow-hidden bg-slate-100">
         {/* search bar and category tabs */}
-        <div className="sticky top-0 bg-white z-10 border md:p-10">
-          <div className="flex gap-3 items-center relative rounded-full rounded">
+        <div className="sticky top-0  z-10 ">
+          <div className="flex gap-3 items-center relative rounded-full md:rounded">
             <Input
               placeholder="Search here..."
+              className="rounded-full md:rounded border-none p-6"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state on input change
             />
-            <Search className="absolute right-3" />
+            <Search className="absolute right-5" />
           </div>
           {/* categories */}
-          <div className="flex space-x-4 p-4 overflow-x-scroll border-t border-b mt-10">
+          <div className="flex mx-2 rounded-lg space-x-4 p-4 overflow-x-scroll  mt-10 bg-white">
             <button
               onClick={() => setActiveTab("All")}
-              className={`${
-                activeTab === "All"
-                  ? "bg-gray-900 text-white"
-                  : "bg-gray-200 text-gray-900"
-              } whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200`}
+              className={`${activeTab === "All"
+                ? "bg-gray-900 text-white"
+                : "bg-gray-200 text-gray-900"
+                } whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200`}
             >
               All
             </button>
@@ -88,11 +88,10 @@ const App: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`${
-                  activeTab === tab.id
-                    ? "bg-gray-900 text-white"
-                    : "bg-gray-200 text-gray-900"
-                } whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200`}
+                className={`${activeTab === tab.id
+                  ? "bg-gray-900 text-white"
+                  : "bg-gray-200 text-gray-900"
+                  } whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200`}
               >
                 {tab.name}
               </button>
@@ -100,38 +99,34 @@ const App: React.FC = () => {
           </div>
         </div>
         {/* menu */}
-        <div className="space-y-4 mt-4 overflow-y-auto h-full px-4">
-          {searchQuery.trim() ? (
-            filteredItems.map((item) => (
-              <ItemDetailSheet
-                key={item.id}
-                item={item}
-                setSelectedItem={setSelectedItem}
-              />
-            ))
-          ) : activeTab === "All" ? (
-            Object.keys(groupedItems).map((categoryName) => (
-              <div key={categoryName}>
-                <h2 className="text-xl font-bold text-gray-800 py-4">{categoryName}</h2>
-                {groupedItems[categoryName].map((item) => (
-                  <ItemDetailSheet
-                    key={item.id}
-                    item={item}
-                    setSelectedItem={setSelectedItem}
-                  />
-                ))}
+        {activeTab === "All" ? (
+          <div className="mt-10 overflow-y-scroll h-full ">
+            {Object.keys(groupedItems).map((categoryName) => (
+              <div className="mt-7 ">
+                <h2 className="text-xl font-bold  text-gray-800 px-4 mb-2">{categoryName}</h2>
+                <div key={categoryName} className="space-y-4">
+                  {groupedItems[categoryName].map((item) => (
+                    <ItemDetailSheet
+                      key={item.id}
+                      item={item}
+                      setSelectedItem={setSelectedItem}
+                    />
+                  ))}
+                </div>
               </div>
-            ))
-          ) : (
-            filteredItems.map((item) => (
+            ))}
+          </div>
+        ) : (
+          <div className="mt-10 overflow-y-scroll h-full space-y-4 pb-20">
+            {filteredItems.map((item) => (
               <ItemDetailSheet
                 key={item.id}
                 item={item}
                 setSelectedItem={setSelectedItem}
               />
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
