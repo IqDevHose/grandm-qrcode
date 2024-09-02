@@ -14,6 +14,7 @@ const App: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<Item | null>(null); // state to track the selected item
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
+  const [groupedItems, setGroupedItems] = useState<{ [key: string]: Item[] }>({}); // State to track grouped items
 
   const query = useQuery({
     queryKey: ['restaurant', resId],
@@ -29,6 +30,13 @@ const App: React.FC = () => {
         query?.data?.categories?.flatMap((category: Category) => category.items) || [];
       setItems(allItems);
       setFilteredItems(allItems); // Initialize filteredItems with all items
+
+      // Group items by category
+      const grouped = query?.data?.categories?.reduce((acc: { [key: string]: Item[] }, category: Category) => {
+        acc[category.name] = category.items;
+        return acc;
+      }, {});
+      setGroupedItems(grouped || {});
     } else {
       const selectedCategory = query?.data?.categories?.find(
         (category: Category) => category.id === activeTab
@@ -49,8 +57,8 @@ const App: React.FC = () => {
   return (
     <>
       <div className="md:px-72 px-2 py-10 w-full h-screen overflow-hidden">
-        {/* search bar */}
-        <div className="border md:p-10">
+        {/* search bar and category tabs */}
+        <div className="sticky top-0 bg-white z-10 border md:p-10">
           <div className="flex gap-3 items-center relative">
             <Input
               placeholder="Search here..."
@@ -85,16 +93,31 @@ const App: React.FC = () => {
               </button>
             ))}
           </div>
-          {/* menu */}
-          <div className="space-y-4 mt-10">
-            {filteredItems?.map((item) => (
+        </div>
+        {/* menu */}
+        <div className="space-y-4 mt-10 overflow-y-auto h-full">
+          {activeTab === "All" ? (
+            Object.keys(groupedItems).map((categoryName) => (
+              <div key={categoryName}>
+                <h2 className="text-xl font-bold text-gray-800 px-4 py-2">{categoryName}</h2>
+                {groupedItems[categoryName].map((item) => (
+                  <ItemDetailSheet
+                    key={item.id}
+                    item={item}
+                    setSelectedItem={setSelectedItem}
+                  />
+                ))}
+              </div>
+            ))
+          ) : (
+            filteredItems.map((item) => (
               <ItemDetailSheet
                 key={item.id}
                 item={item}
                 setSelectedItem={setSelectedItem}
               />
-            ))}
-          </div>
+            ))
+          )}
         </div>
       </div>
     </>
