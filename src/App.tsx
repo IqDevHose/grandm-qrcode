@@ -56,20 +56,20 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="md:px-72 px-2 py-10 w-full h-screen overflow-hidden bg-gray-100">
+      <div className="md:px-72 px-2 py-10 w-full h-screen overflow-hidden bg-slate-100">
         {/* search bar and category tabs */}
         <div className="sticky top-0  z-10 ">
           <div className="flex gap-3 items-center relative rounded-full md:rounded">
             <Input
               placeholder="Search here..."
-              className="rounded-full md:rounded border-none"
+              className="rounded-full md:rounded border-none p-6"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state on input change
             />
-            <Search className="absolute right-3" />
+            <Search className="absolute right-5" />
           </div>
           {/* categories */}
-          <div className="flex rounded-lg space-x-4 p-4 overflow-x-scroll  mt-10 bg-white">
+          <div className="flex mx-2 rounded-lg space-x-4 p-4 overflow-x-scroll  mt-10 bg-white">
             <button
               onClick={() => setActiveTab("All")}
               className={`${activeTab === "All"
