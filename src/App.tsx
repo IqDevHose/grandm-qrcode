@@ -5,11 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import ItemDetailSheet from "./components/ItemDetailSheet"; // Import the new component
 import { Item, Category } from "./lib/types";
-
+import { useTranslation } from "react-i18next";
 const resId = "clztug1a60000hb92oth3lmxp";
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("All");
+  const { t } = useTranslation();
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null); // state to track the selected item
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,7 +22,9 @@ const App: React.FC = () => {
   const query = useQuery({
     queryKey: ["restaurant", resId],
     queryFn: async () => {
-      const res = await axios.get(`http://192.168.100.31:3000/restaurant/${resId}`);
+      const res = await axios.get(
+        `http://192.168.100.31:3000/restaurant/${resId}`
+      );
       return res.data;
     },
   });
@@ -77,7 +80,7 @@ const App: React.FC = () => {
         <div className="sticky top-0 z-10 ">
           <div className="flex items-center relative rounded-full md:rounded  ">
             <Input
-              placeholder="Search here..."
+              placeholder={t("Search here...")}
               className="rounded-full border-none w-full m-3 shadow-lg shadow-slate-200 p-7"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state on input change
@@ -96,7 +99,7 @@ const App: React.FC = () => {
                   activeTab === "All" ? query?.data?.theme?.primary : "",
               }}
             >
-              All
+              {t("All")}
             </button>
 
             {query?.data?.categories?.map((tab: Category) => (
@@ -104,16 +107,14 @@ const App: React.FC = () => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${
-                  activeTab === tab.id
-                    ? " text-white"
-                    : "text-gray-900 "
+                  activeTab === tab.id ? " text-white" : "text-gray-900 "
                 }`}
                 style={{
                   backgroundColor:
                     activeTab === tab.id ? query?.data?.theme?.primary : "",
                 }}
               >
-                {tab.name}
+                {t(tab.name)} 
               </button>
             ))}
           </div>
@@ -138,7 +139,7 @@ const App: React.FC = () => {
               {Object.keys(groupedItems).map((categoryName) => (
                 <div key={categoryName} className="mt-7">
                   <h2 className="text-xl font-bold text-gray-800 px-4 mb-2">
-                    {categoryName}
+                    {t(categoryName)}
                   </h2>
                   <div className="space-y-4">
                     {groupedItems[categoryName].map((item) => (
