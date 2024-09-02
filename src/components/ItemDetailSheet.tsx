@@ -19,19 +19,22 @@ const ItemDetailSheet: React.FC<ItemDetailSheetProps> = ({ item, setSelectedItem
       <SheetTrigger asChild>
         <div
           onClick={() => setSelectedItem(item)} // Set the selected item on click
-          className="flex p-5 border rounded-lg hover:shadow-lg mx-2 cursor-pointer"
+          className="flex items-center p-4 border-b cursor-pointer hover:bg-gray-100 transition-colors duration-200"
         >
-          <div className="size-14 rounded object-contain overflow-hidden border flex items-center justify-center mr-5">
-            <img src={item.image} alt={item.name} className="w-full" />
+          {/* Circular Image */}
+          <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
+            <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
           </div>
+          {/* Item Details */}
           <div>
-            <h2 className="font-bold text-lg">{item.name}</h2>
-            <p className="text-gray-400">{item.price} IQD</p>
+            <h2 className="font-bold text-lg text-gray-800">{item.name}</h2>
+            <p className="text-gray-600 text-sm">{item.price} IQD</p>
           </div>
         </div>
       </SheetTrigger>
       <SheetContent side="bottom">
         <div className="p-6 space-y-4">
+          {/* Large Image in Sheet */}
           <img src={item.image} alt={item.name} className="w-full h-48 object-cover rounded-lg" />
           <div className="text-center">
             <SheetTitle className="text-2xl font-bold">{item.name}</SheetTitle>
