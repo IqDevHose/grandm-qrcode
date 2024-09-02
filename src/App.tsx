@@ -25,6 +25,7 @@ const App: React.FC = () => {
   });
 
   useEffect(() => {
+    // Initialize items based on activeTab and group items by category
     if (activeTab === "All") {
       const allItems =
         query?.data?.categories?.flatMap((category: Category) => category.items) || [];
@@ -62,20 +63,21 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="md:px-72 px-2 py-10 w-full h-screen overflow-hidden bg-gray-100">
+    <div className="md:px-72 px-2 py-10 w-full h-screen overflow-hidden bg-slate-100">
         {/* search bar and category tabs */}
-        <div className="sticky top-0 z-10 bg-white">
-          <div className="flex gap-3 items-center relative mx-4 rounded-full">
+        <div className="sticky top-0  z-10 ">
+          <div className="flex gap-3 items-center relative rounded-full md:rounded">
+
             <Input
               placeholder="Search here..."
-              className="rounded-full md:rounded border-none"
+              className="rounded-full border-none w-full"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state on input change
             />
-            <Search className="absolute right-3" />
+            <Search className="absolute right-5 text-gray-500" />
           </div>
           {/* categories */}
-          <div className="flex space-x-4 p-4 overflow-x-scroll border-t border-b mt-10">
+          <div className="flex space-x-4 p-4 overflow-x-auto border-t border-b mt-4 bg-white">
             <button
               onClick={() => setActiveTab("All")}
               className={`${activeTab === "All"
@@ -100,19 +102,23 @@ const App: React.FC = () => {
           </div>
         </div>
         {/* menu */}
-        <div className="space-y-4 mt-4 overflow-y-auto h-full px-4 pb-32">
+        <div className="mt-10 overflow-y-auto h-[calc(100vh-250px)] px-4 pb-20">
           {searchQuery.trim() ? (
-            filteredItems.map((item) => (
-              <ItemDetailSheet
-                key={item.id}
-                item={item}
-                setSelectedItem={setSelectedItem}
-              />
-            ))
+            filteredItems.length > 0 ? (
+              filteredItems.map((item) => (
+                <ItemDetailSheet
+                  key={item.id}
+                  item={item}
+                  setSelectedItem={setSelectedItem}
+                />
+              ))
+            ) : (
+              <p className="text-center text-gray-500">No items found.</p>
+            )
           ) : activeTab === "All" ? (
             Object.keys(groupedItems).map((categoryName) => (
               <div key={categoryName} className="pb-4">
-                <h2 className="text-2xl font-bold text-gray-800 py-4">{categoryName}</h2>
+                <h2 className="text-xl font-bold text-gray-800 py-4">{categoryName}</h2>
                 <div className="space-y-4">
                   {groupedItems[categoryName].map((item) => (
                     <ItemDetailSheet
