@@ -3,15 +3,7 @@ import { Search } from "lucide-react";
 import { Input } from "./components/ui/input";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import {
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-  SheetClose,
-} from "./components/ui/sheet"; // import the sheet components
+import ItemDetailSheet from "./components/ItemDetailSheet"; // Import the new component
 import { Item, Category } from "./lib/types";
 
 const resId = 'clztug1a60000hb92oth3lmxp';
@@ -96,49 +88,11 @@ const App: React.FC = () => {
           {/* menu */}
           <div className="space-y-4 mt-10">
             {filteredItems?.map((item) => (
-              <Sheet key={item.id}>
-                <SheetTrigger asChild>
-                  <div
-                    onClick={() => setSelectedItem(item)} // Set the selected item on click
-                    className="flex p-5 border rounded-lg hover:shadow-lg mx-2 cursor-pointer"
-                  >
-                    <div className="size-14 rounded object-contain overflow-hidden border flex items-center justify-center mr-5">
-                      <img src={item.image} alt={item.name} className="w-full" />
-                    </div>
-                    <div>
-                      <h2 className="font-bold text-lg">{item.name}</h2>
-                      <p className="text-gray-400">{item.price} IQD</p>
-                    </div>
-                  </div>
-                </SheetTrigger>
-                <SheetContent side="bottom">
-                  {selectedItem && (
-                    <div className="p-6 space-y-4">
-                      <img src={selectedItem.image} alt={selectedItem.name} className="w-full h-48 object-cover rounded-lg" />
-                      <div className="text-center">
-                        <SheetTitle className="text-2xl font-bold">{selectedItem.name}</SheetTitle>
-                        <p className="text-xl text-green-600 mt-2">{selectedItem.price} IQD</p>
-                        <SheetDescription className="text-sm text-gray-500 mt-4">{selectedItem.description || 'No description available.'}</SheetDescription>
-                      </div>
-                      {/* Additional Details Section */}
-                      <div className="text-left mt-4">
-                        <h3 className="text-lg font-semibold">Details:</h3>
-                        <ul className="list-disc list-inside text-sm text-gray-600 mt-2">
-                          <li>Ingredient: Fresh Ingredients</li>
-                          <li>Calories: 250 kcal</li>
-                          <li>Category: {selectedItem.category || 'General'}</li>
-                        </ul>
-                      </div>
-                      {/* Action Buttons */}
-                      <div className="flex justify-center mt-6 space-x-4">
-                        <SheetClose asChild>
-                          <button className="px-4 py-2 bg-gray-200 rounded-lg shadow hover:bg-gray-300">Close</button>
-                        </SheetClose>
-                      </div>
-                    </div>
-                  )}
-                </SheetContent>
-              </Sheet>
+              <ItemDetailSheet
+                key={item.id}
+                item={item}
+                setSelectedItem={setSelectedItem}
+              />
             ))}
           </div>
         </div>
