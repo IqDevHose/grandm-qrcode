@@ -61,20 +61,20 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="md:px-72 px-2 py-10 w-full h-screen overflow-hidden bg-slate-100">
+      <div className="md:px-72 px-2 py-10 w-full h-screen overflow-hidden bg-gray-100">
         {/* search bar and category tabs */}
-        <div className="sticky top-0  z-10 ">
-          <div className="flex gap-3 items-center relative rounded-full md:rounded">
+        <div className="sticky top-0 z-10 bg-white">
+          <div className="flex gap-3 items-center relative mx-4 rounded-full">
             <Input
               placeholder="Search here..."
-              className="rounded-full md:rounded border-none p-6"
+              className="rounded-full md:rounded border-none"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state on input change
             />
-            <Search className="absolute right-5" />
+            <Search className="absolute right-3" />
           </div>
           {/* categories */}
-          <div className="flex mx-2 rounded-lg space-x-4 p-4 overflow-x-scroll  mt-10 bg-white">
+          <div className="flex space-x-4 p-4 overflow-x-scroll border-t border-b mt-10">
             <button
               onClick={() => setActiveTab("All")}
               className={`${activeTab === "All"
@@ -99,12 +99,20 @@ const App: React.FC = () => {
           </div>
         </div>
         {/* menu */}
-        {activeTab === "All" ? (
-          <div className="mt-10 overflow-y-scroll h-full ">
-            {Object.keys(groupedItems).map((categoryName) => (
-              <div className="mt-7 ">
-                <h2 className="text-xl font-bold  text-gray-800 px-4 mb-2">{categoryName}</h2>
-                <div key={categoryName} className="space-y-4">
+        <div className="space-y-4 mt-4 overflow-y-auto h-full px-4 pb-32">
+          {searchQuery.trim() ? (
+            filteredItems.map((item) => (
+              <ItemDetailSheet
+                key={item.id}
+                item={item}
+                setSelectedItem={setSelectedItem}
+              />
+            ))
+          ) : activeTab === "All" ? (
+            Object.keys(groupedItems).map((categoryName) => (
+              <div key={categoryName} className="pb-4">
+                <h2 className="text-2xl font-bold text-gray-800 py-4">{categoryName}</h2>
+                <div className="space-y-4">
                   {groupedItems[categoryName].map((item) => (
                     <ItemDetailSheet
                       key={item.id}
@@ -114,19 +122,17 @@ const App: React.FC = () => {
                   ))}
                 </div>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="mt-10 overflow-y-scroll h-full space-y-4 pb-20">
-            {filteredItems.map((item) => (
+            ))
+          ) : (
+            filteredItems.map((item) => (
               <ItemDetailSheet
                 key={item.id}
                 item={item}
                 setSelectedItem={setSelectedItem}
               />
-            ))}
-          </div>
-        )}
+            ))
+          )}
+        </div>
       </div>
     </>
   );
