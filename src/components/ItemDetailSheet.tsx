@@ -11,11 +11,13 @@ import { Item } from "../lib/types";
 interface ItemDetailSheetProps {
   item: Item;
   setSelectedItem: (item: Item | null) => void;
+  themeColor: string;
 }
 
 const ItemDetailSheet: React.FC<ItemDetailSheetProps> = ({
   item,
   setSelectedItem,
+  themeColor,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -53,7 +55,17 @@ const ItemDetailSheet: React.FC<ItemDetailSheetProps> = ({
             <SheetTitle className="text-3xl font-semibold">
               {item.name}
             </SheetTitle>
-            <p className="text-xl text-green-600 mt-2">{item.price} IQD</p>
+            <p className="text-xl text-white mt-2">
+              <span
+                style={{
+                  // backgroundColor: themeColor,
+                  color: themeColor,
+                }}
+                className=""
+              >
+                {item.price} IQD
+              </span>
+            </p>
             <SheetDescription className="text-sm text-gray-500 mt-4 ">
               {item.description || "No details available."}
             </SheetDescription>
@@ -61,8 +73,11 @@ const ItemDetailSheet: React.FC<ItemDetailSheetProps> = ({
           {/* Close Button */}
           <div className="flex justify-center mt-6">
             <button
+              style={{
+                backgroundColor: themeColor,
+              }}
               onClick={handleClose}
-              className="bg-green-600 text-white py-3 px-14 rounded-full text-lg font-semibold hover:bg-green-700 transition"
+              className="text-white py-3 px-14 rounded-full text-lg font-semibold transition"
             >
               Close
             </button>
