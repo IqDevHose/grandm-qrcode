@@ -21,7 +21,7 @@ const App: React.FC = () => {
   const query = useQuery({
     queryKey: ["restaurant", resId],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:3000/restaurant/${resId}`);
+      const res = await axios.get(`http://192.168.100.31:3000/restaurant/${resId}`);
       return res.data;
     },
   });
@@ -75,17 +75,17 @@ const App: React.FC = () => {
       <div className="md:px-72 px-2 py-10 w-full h-screen overflow-hidden bg-slate-100">
         {/* search bar and category tabs */}
         <div className="sticky top-0 z-10 ">
-          <div className="flex gap-3 items-center relative rounded-full md:rounded">
+          <div className="flex items-center relative rounded-full md:rounded  ">
             <Input
               placeholder="Search here..."
-              className="rounded-full border-none w-full"
+              className="rounded-full border-none w-full m-3 shadow-lg shadow-slate-200 p-7"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state on input change
             />
-            <Search className="absolute right-5" />
+            <Search className="absolute right-8 text-slate-400" />
           </div>
           {/* categories */}
-          <div className="flex mx-2 rounded-lg space-x-4 p-4 overflow-x-scroll mt-10 bg-white">
+          <div className="flex shadow-lg shadow-slate-200 mx-3 rounded-lg space-x-4 p-4 overflow-x-scroll mt-5 bg-white">
             <button
               onClick={() => setActiveTab("All")}
               className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${
@@ -105,7 +105,7 @@ const App: React.FC = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${
                   activeTab === tab.id
-                    ? "bg-gray-900 text-white"
+                    ? " text-white"
                     : "text-gray-900 "
                 }`}
                 style={{

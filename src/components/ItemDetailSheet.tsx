@@ -31,14 +31,14 @@ const ItemDetailSheet: React.FC<ItemDetailSheetProps> = ({
       <SheetTrigger asChild>
         <div
           onClick={() => setIsOpen(true)} // Open the sheet on click
-          className="flex p-5 rounded-lg hover:shadow-lg mx-2 cursor-pointer bg-white"
+          className="flex items-center shadow-lg shadow-slate-200 p-5 rounded-lg hover:shadow-lg mx-3 cursor-pointer bg-white"
         >
-          <div className="size-14 rounded object-contain overflow-hidden border flex items-center justify-center mr-5">
-            <img src={item.image} alt={item.name} className="w-full" />
+          <div className="size-14 rounded-full   overflow-hidden border flex items-center justify-center mr-5">
+            <img src={item.image} alt={item.name} className="w-full object-contain" />
           </div>
           <div>
-            <h2 className="font-bold text-sm">{item.name}</h2>
-            <p className="text-gray-400">{item.price} IQD</p>
+            <h2 className="font-bold text-sm text-slate-700">{item.name}</h2>
+            <p className="text-slate-400">{item.price} IQD</p>
           </div>
         </div>
       </SheetTrigger>
