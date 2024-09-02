@@ -119,7 +119,7 @@ const App: React.FC = () => {
           </div>
         </div>
         {/* menu */}
-        <div className="overflow-y-auto h-[calc(100vh-250px)]  ">
+        <div className=" h-[calc(100vh-250px)]  ">
           {searchQuery.trim() ? (
             filteredItems.length > 0 ? (
               filteredItems.map((item) => (
@@ -154,7 +154,7 @@ const App: React.FC = () => {
               ))}
             </div>
           ) : (
-            <div className="mt-10 overflow-y-scroll h-full space-y-4 pb-20">
+            <div className="mt-10 overflow-y-scroll h-full space-y-4 pb-10">
               {filteredItems.map((item) => (
                 <ItemDetailSheet
                   key={item.id}
