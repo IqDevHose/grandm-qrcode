@@ -30,7 +30,7 @@ const Restaurant: React.FC = () => {
   const query = useQuery({
     queryKey: ["restaurant", id],
     queryFn: async () => {
-      const res = await axios.get(`http://https://grand-mellienum-surveys-backend.onrender.com/restaurant/${id}`);
+      const res = await axios.get(`https://grand-mellienum-surveys-backend.onrender.com/restaurant/${id}`);
       return res.data;
     },
     enabled : !!id

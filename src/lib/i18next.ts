@@ -31,7 +31,7 @@ i18n
         },
         // Backend options for fetching translations
         backend: {
-            loadPath: `http://https://grand-mellienum-surveys-backend.onrender.com/locales/{{lng}}.json`, // Adjust the path based on your backend setup
+            loadPath: `https://grand-mellienum-surveys-backend.onrender.com/locales/{{lng}}.json`, // Adjust the path based on your backend setup
         },
         // Enable debug mode
         // debug: true,
