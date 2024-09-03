@@ -11,7 +11,6 @@ import ItemDetailSheet from "@/components/ItemDetailSheet";
 import { useParams } from "react-router-dom";
 
 
-const resId = "clztug1a60000hb92oth3lmxp";
 
 const Restaurant: React.FC = () => {
     const {id} = useParams()
@@ -21,7 +20,7 @@ const Restaurant: React.FC = () => {
   );
   const { t, i18n } = useTranslation();
   const [items, setItems] = useState<Item[]>([]);
-  const [selectedItem, setSelectedItem] = useState<Item | null>(null); // state to track the selected item
+  const [_, setSelectedItem] = useState<Item | null>(null); // state to track the selected item
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredItems, setFilteredItems] = useState<Item[]| [] >([]);
   const [groupedItems, setGroupedItems] = useState<{ [key: string]: Item[] }>(
