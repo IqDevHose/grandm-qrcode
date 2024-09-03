@@ -8,12 +8,20 @@ import { Item, Category } from "./lib/types";
 import { useTranslation } from "react-i18next";
 import { Button } from "./components/ui/button";
 import { changeLanguage } from "./lib/utils";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./components/ui/select";
 const resId = "clztug1a60000hb92oth3lmxp";
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("All");
-  const [language, setLanguage] = useState(localStorage.getItem('language') || 'en');
+  const [language, setLanguage] = useState(
+    localStorage.getItem("language") || "en"
+  );
   const { t, i18n } = useTranslation();
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null); // state to track the selected item
@@ -26,9 +34,7 @@ const App: React.FC = () => {
   const query = useQuery({
     queryKey: ["restaurant", resId],
     queryFn: async () => {
-      const res = await axios.get(
-        `http://192.168.100.31:3000/restaurant/${resId}`
-      );
+      const res = await axios.get(`http://localhost:3000/restaurant/${resId}`);
       return res.data;
     },
   });
@@ -77,7 +83,7 @@ const App: React.FC = () => {
     }
   }, [searchQuery, items]);
   const handleLanguageChange = () => {
-    const newLanguage = language === 'en' ? 'ar' : 'en';
+    const newLanguage = language === "en" ? "ar" : "en";
     changeLanguage(newLanguage);
     setLanguage(newLanguage);
   };
@@ -85,17 +91,21 @@ const App: React.FC = () => {
     <>
       <div className=" px-2 py-10 w-full h-screen relative overflow-hidden bg-slate-100">
         {/* search bar and category tabs */}
-          <div className="w-24 flex z-50 items-center justify-center overflow-hidden text-center absolute bottom-28 right-5 bg-white p-3 shadow shadow-slate-300  rounded-full ">
-            <img src={query?.data?.image} alt={query?.data?.name} className="w-full object-contain" />
-          </div>
+        <div className="w-24 flex z-50 items-center justify-center overflow-hidden text-center absolute bottom-28 right-5 bg-white p-3 shadow shadow-slate-300  rounded-full ">
+          <img
+            src={query?.data?.image}
+            alt={query?.data?.name}
+            className="w-full object-contain"
+          />
+        </div>
         <Button
           onClick={handleLanguageChange}
           variant={"default"}
           className="absolute rounded-full w-24   flex items-center gap-1 bottom-14 right-5 shadow-lg shadow-slate-400"
         >
-          {language === 'ar' && <Globe size={16} className="size-4"/>}
-          {language === 'en' ? 'العربية' : 'Eng'}
-          {language === 'en' && <Globe size={16} className="size-4"/>}
+          {language === "ar" && <Globe size={16} className="size-4" />}
+          {language === "en" ? "العربية" : "Eng"}
+          {language === "en" && <Globe size={16} className="size-4" />}
         </Button>
         <div className="sticky top-0 z-10 ">
           <div className="flex items-center relative rounded-full md:rounded  ">
@@ -105,14 +115,21 @@ const App: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state on input change
             />
-            <Search className={`absolute ${language === 'en' ? 'right-8' : 'left-8'} text-slate-400`} />
+            <Search
+              className={`absolute ${
+                language === "en" ? "right-8" : "left-8"
+              } text-slate-400`}
+            />
           </div>
           {/* categories */}
           <div className="flex shadow-lg shadow-slate-200 mx-3 rounded-lg p-4 overflow-x-scroll mt-5 bg-white">
             <button
               onClick={() => setActiveTab("All")}
-              className={`whitespace-nowrap mx-2 px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${activeTab === "All" ? "text-white" : "bg-slate-100 text-gray-900"
-                }`}
+              className={`whitespace-nowrap mx-2 px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${
+                activeTab === "All"
+                  ? "text-white"
+                  : "bg-slate-100 text-gray-900"
+              }`}
               style={{
                 backgroundColor:
                   activeTab === "All" ? query?.data?.theme?.primary : "",
@@ -125,8 +142,11 @@ const App: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`whitespace-nowrap mx-2 px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${activeTab === tab.id ? " text-white" : "bg-slate-100 text-gray-900 "
-                  }`}
+                className={`whitespace-nowrap mx-2 px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${
+                  activeTab === tab.id
+                    ? " text-white"
+                    : "bg-slate-100 text-gray-900 "
+                }`}
                 style={{
                   backgroundColor:
                     activeTab === tab.id ? query?.data?.theme?.primary : "",
@@ -143,7 +163,7 @@ const App: React.FC = () => {
             <img src={query?.data?.image} alt={query?.data?.name} className="w-full object-contain" />
           </div>
         </div> */}
-        <div className=" h-[calc(100vh-250px)]  ">
+        <div className=" h-[calc(100vh-250px)] space-y-4 mt-4 ">
           {searchQuery.trim() ? (
             filteredItems.length > 0 ? (
               filteredItems.map((item) => (
