@@ -175,7 +175,9 @@ const App: React.FC = () => {
                 />
               ))
             ) : (
-              <p className="text-center text-gray-500">No items found.</p>
+              <p className="text-center text-gray-500">
+                {t("No items found.")}
+              </p>
             )
           ) : activeTab === "All" ? (
             <div className=" overflow-y-scroll h-full ">
