@@ -43,7 +43,7 @@ const ItemDetailSheet: React.FC<ItemDetailSheetProps> = ({
           </div>
         </div>
       </SheetTrigger>
-      <SheetContent className="mx-8" side="bottom">
+      <SheetContent className="mx-4" side="bottom">
         <div className="relative p-4 space-y-4">
           <div className="size-50 flex items-center justify-center object-contain">
             <img
