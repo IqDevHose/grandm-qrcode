@@ -91,19 +91,23 @@ const App: React.FC = () => {
     <>
       <div className=" px-2 py-10 w-full h-screen relative overflow-hidden bg-slate-100">
         {/* search bar and category tabs */}
-        <div className="w-24 flex z-50 items-center justify-center overflow-hidden text-center absolute bottom-28 right-5 bg-white p-3 shadow shadow-slate-300  rounded-full ">
+        <div className={`w-24 flex z-50 items-center justify-center overflow-hidden text-center absolute bottom-28 ${language === 'ar'? "left-5": "right-5"} bg-white p-3 shadow shadow-slate-300  rounded-full  `}>
           <img
             src={query?.data?.image}
             alt={query?.data?.name}
             className="w-full object-contain"
           />
         </div>
+
         <Button
           onClick={handleLanguageChange}
           variant={"default"}
-          className="absolute rounded-full w-24   flex items-center gap-1 bottom-14 right-5 shadow-lg shadow-slate-400"
+          className={`absolute rounded-full w-24   flex items-center gap-1 bottom-14 ${language === 'ar'? "left-5": "right-5"}
+          
+          shadow-lg shadow-slate-400`}
         >
           {language === "ar" && <Globe size={16} className="size-4" />}
+
           {language === "en" ? "العربية" : "Eng"}
           {language === "en" && <Globe size={16} className="size-4" />}
         </Button>
