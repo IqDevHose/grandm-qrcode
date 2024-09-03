@@ -10,10 +10,8 @@ import { Input } from "@/components/ui/input";
 import ItemDetailSheet from "@/components/ItemDetailSheet";
 import { useParams } from "react-router-dom";
 
-
-
 const Restaurant: React.FC = () => {
-    const {id} = useParams()
+  const { id } = useParams();
   const [activeTab, setActiveTab] = useState<string>("All");
   const [language, setLanguage] = useState(
     localStorage.getItem("language") || "en"
@@ -22,7 +20,7 @@ const Restaurant: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [_, setSelectedItem] = useState<Item | null>(null); // state to track the selected item
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredItems, setFilteredItems] = useState<Item[]| [] >([]);
+  const [filteredItems, setFilteredItems] = useState<Item[] | []>([]);
   const [groupedItems, setGroupedItems] = useState<{ [key: string]: Item[] }>(
     {}
   ); // State to track grouped items
@@ -30,10 +28,12 @@ const Restaurant: React.FC = () => {
   const query = useQuery({
     queryKey: ["restaurant", id],
     queryFn: async () => {
-      const res = await axios.get(`https://grand-mellienum-surveys-backend.onrender.com/restaurant/${id}`);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/restaurant/${id}`
+      );
       return res.data;
     },
-    enabled : !!id
+    enabled: !!id,
   });
 
   const themeColor = query?.data?.theme?.primary;
@@ -70,33 +70,33 @@ const Restaurant: React.FC = () => {
   useEffect(() => {
     // Filter items based on the search query
     const trimmedQuery = searchQuery.trim().toLowerCase();
-  
+
     if (trimmedQuery) {
       let filtered = [] as Item[];
-  
-      if (i18n.language === 'ar') {
+
+      if (i18n.language === "ar") {
         // Only check Arabic names
         filtered = items.filter((item) => {
-          const nameArExists = item.nameAr && item.nameAr.includes(trimmedQuery);
+          const nameArExists =
+            item.nameAr && item.nameAr.includes(trimmedQuery);
           return nameArExists;
         });
-      } else if (i18n.language === 'en') {
+      } else if (i18n.language === "en") {
         // Only check English names
         filtered = items.filter((item) => {
-          const nameExists = item.name && item.name.toLowerCase().includes(trimmedQuery);
+          const nameExists =
+            item.name && item.name.toLowerCase().includes(trimmedQuery);
           return nameExists;
         });
       }
-  
+
       console.log("Filtered Items:", filtered); // Log the filtered items
       setFilteredItems(filtered);
     } else {
       setFilteredItems(items); // Reset to all items if search query is empty
     }
   }, [searchQuery, items, i18n.language]);
-  
-  
-  
+
   const handleLanguageChange = () => {
     const newLanguage = language === "en" ? "ar" : "en";
     changeLanguage(newLanguage);
@@ -116,7 +116,7 @@ const Restaurant: React.FC = () => {
         <Button
           onClick={handleLanguageChange}
           variant={"default"}
-          className="absolute rounded-full w-24   flex items-center gap-1 bottom-14 right-5 shadow-lg shadow-slate-400"
+          className="absolute rounded-full w-24 flex items-center gap-1 bottom-44 right-5 shadow-lg shadow-slate-400"
         >
           {language === "ar" && <Globe size={16} className="size-4" />}
           {language === "en" ? "العربية" : "Eng"}
