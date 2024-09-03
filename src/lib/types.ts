@@ -7,6 +7,7 @@ export interface Item {
     price: number;
     description?: string;
     category: string;
+    nameAr: string;
   }
   
   export interface Category {

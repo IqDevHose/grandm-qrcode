@@ -26,7 +26,7 @@ const App: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null); // state to track the selected item
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredItems, setFilteredItems] = useState<Item[]>([]);
+  const [filteredItems, setFilteredItems] = useState<Item[]| [] >([]);
   const [groupedItems, setGroupedItems] = useState<{ [key: string]: Item[] }>(
     {}
   ); // State to track grouped items
@@ -73,15 +73,33 @@ const App: React.FC = () => {
   useEffect(() => {
     // Filter items based on the search query
     const trimmedQuery = searchQuery.trim().toLowerCase();
+  
     if (trimmedQuery) {
-      const filtered = items.filter((item) =>
-        item.name.toLowerCase().includes(trimmedQuery)
-      );
+      let filtered = [] as Item[];
+  
+      if (i18n.language === 'ar') {
+        // Only check Arabic names
+        filtered = items.filter((item) => {
+          const nameArExists = item.nameAr && item.nameAr.includes(trimmedQuery);
+          return nameArExists;
+        });
+      } else if (i18n.language === 'en') {
+        // Only check English names
+        filtered = items.filter((item) => {
+          const nameExists = item.name && item.name.toLowerCase().includes(trimmedQuery);
+          return nameExists;
+        });
+      }
+  
+      console.log("Filtered Items:", filtered); // Log the filtered items
       setFilteredItems(filtered);
     } else {
       setFilteredItems(items); // Reset to all items if search query is empty
     }
-  }, [searchQuery, items]);
+  }, [searchQuery, items, i18n.language]);
+  
+  
+  
   const handleLanguageChange = () => {
     const newLanguage = language === "en" ? "ar" : "en";
     changeLanguage(newLanguage);
@@ -164,9 +182,9 @@ const App: React.FC = () => {
           </div>
         </div> */}
         <div className=" h-[calc(100vh-250px)] space-y-4 mt-4 ">
-          {searchQuery.trim() ? (
-            filteredItems.length > 0 ? (
-              filteredItems.map((item) => (
+          {searchQuery?.trim() ? (
+            filteredItems?.length > 0 ? (
+              filteredItems?.map((item) => (
                 <ItemDetailSheet
                   themeColor={themeColor}
                   key={item.id}
