@@ -123,7 +123,7 @@ const Restaurant: React.FC = () => {
         <Button
           onClick={handleLanguageChange}
           variant={"default"}
-          className={`absolute rounded-full w-24 z-[10] flex items-center gap-1 bottom-20 ${language === "ar" ? "left-5" : "right-5"}`}
+          className={`absolute rounded-full w-24 z-[10] flex items-center gap-1 bottom-24 ${language === "ar" ? "left-5" : "right-5"}`}
         >
           {language === "ar" && <Globe size={16} className="size-4" />}
           {language === "en" ? "العربية" : "Eng"}
