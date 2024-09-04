@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Globe, Search } from "lucide-react";
+import { ChevronsRight, Globe, Search } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
@@ -138,24 +138,23 @@ const Restaurant: React.FC = () => {
               onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state on input change
             />
             <Search
-              className={`absolute ${
-                language === "en" ? "right-8" : "left-8"
-              } text-slate-400`}
+              className={`absolute ${language === "en" ? "right-8" : "left-8"
+                } text-slate-400`}
             />
           </div>
           {/* categories */}
-          <div 
-          style={{
-            backgroundColor: query?.data?.theme?.primary,
-          }}
-          className="flex mx-3  p-4 overflow-x-scroll mt-5 rounded-lg">
+          <div
+            style={{
+              backgroundColor: query?.data?.theme?.primary,
+            }}
+            className="flex mx-3  p-4 overflow-x-scroll mt-5 rounded-lg relative">
+   
             <button
               onClick={() => setActiveTab("All")}
-              className={`whitespace-nowrap border-2 border-transparent text-[16px] mx-2 px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${
-                activeTab === "All"
+              className={`whitespace-nowrap  border-white text-[16px] mx-2 px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${activeTab === "All"
                   ? "border-white bg-white text-black font-semibold"
                   : "text-white"
-              }`}
+                }`}
             >
               {t("All")}
             </button>
@@ -164,12 +163,11 @@ const Restaurant: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`whitespace-nowrap border-2 border-transparent text-[16px] mx-2 px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${
-                  activeTab === tab.id
+                className={`whitespace-nowrap  border-white text-[16px] mx-2 px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${activeTab === tab.id
                     ? "border-white bg-white text-black font-semibold"
                     : "text-white"
-                }`}
-                
+                  }`}
+
               >
                 {t(tab.name)}
               </button>
@@ -182,7 +180,7 @@ const Restaurant: React.FC = () => {
             <img src={query?.data?.image} alt={query?.data?.name} className="w-full object-contain" />
           </div>
         </div> */}
-        <div className=" h-[calc(100vh-250px)] overflow-y-scroll space-y-4 mt-4 pb-8 ">
+        <div className=" h-[calc(100vh-250px)] overflow-y-scroll space-y-4 pb-8 ">
           {searchQuery?.trim() ? (
             filteredItems?.length > 0 ? (
               filteredItems?.map((item) => (
