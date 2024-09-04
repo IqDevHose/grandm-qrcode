@@ -40,8 +40,8 @@ const ItemDetailSheet: React.FC<ItemDetailSheetProps> = ({
             <div className="bg-white w-[80px] min-w-[50px] h-[80px] min-h-[50px] rounded-md object-cover overflow-hidden border flex items-center justify-center mx-4">
               <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
             </div>
-            <div className="">
-              <h2 className="font-bold text-sm text-slate-700">{t(item.name)}</h2>
+            <div className="space-y-2">
+              <h2 className="font-bold  text-slate-700">{t(item.name)}</h2>
               <p 
               style={{
                 color: themeColor
