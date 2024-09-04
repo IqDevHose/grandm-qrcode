@@ -104,19 +104,26 @@ const Restaurant: React.FC = () => {
   };
   return (
     <>
-      <div className=" px-2 py-10 w-full h-screen relative overflow-hidden bg-slate-100">
+      <div className=" px-2 py-10 w-full h-screen relative overflow-hidden bg-slate-50">
+        <div className={`w-full flex z-50 items-center justify-center overflow-hidden text-center`}>
+          <img
+            src={query?.data?.image}
+            alt={query?.data?.name}
+            className="w-[150px] object-contain"
+          />
+        </div>
         {/* search bar and category tabs */}
-        <div className="w-24 flex z-50 items-center justify-center overflow-hidden text-center absolute bottom-28 right-5 bg-white p-3 shadow shadow-slate-300  rounded-full ">
+        {/* <div className={`w-24 flex z-50 items-center justify-center overflow-hidden text-center absolute bottom-28 ${language === "ar" ? "left-5" : "right-5"} bg-white p-3 shadow shadow-slate-300  rounded-full `}>
           <img
             src={query?.data?.image}
             alt={query?.data?.name}
             className="w-full object-contain"
           />
-        </div>
+        </div> */}
         <Button
           onClick={handleLanguageChange}
           variant={"default"}
-          className="absolute rounded-full w-24   flex items-center gap-1 bottom-14 right-5 shadow-lg shadow-slate-400"
+          className={`absolute rounded-full w-24 z-[10] flex items-center gap-1 bottom-14 ${language === "ar" ? "left-5" : "right-5"}`}
         >
           {language === "ar" && <Globe size={16} className="size-4" />}
           {language === "en" ? "العربية" : "Eng"}
@@ -137,18 +144,18 @@ const Restaurant: React.FC = () => {
             />
           </div>
           {/* categories */}
-          <div className="flex shadow-lg shadow-slate-200 mx-3 rounded-lg p-4 overflow-x-scroll mt-5 bg-white">
+          <div 
+          style={{
+            backgroundColor: query?.data?.theme?.primary,
+          }}
+          className="flex mx-3 rounded-lg p-4 overflow-x-scroll mt-5 border-x-4 border-transparent">
             <button
               onClick={() => setActiveTab("All")}
-              className={`whitespace-nowrap mx-2 px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${
+              className={`whitespace-nowrap border-2 border-transparent text-[16px] mx-2 px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${
                 activeTab === "All"
-                  ? "text-white"
-                  : "bg-slate-100 text-gray-900"
+                  ? "border-white bg-white text-black font-semibold"
+                  : "text-white"
               }`}
-              style={{
-                backgroundColor:
-                  activeTab === "All" ? query?.data?.theme?.primary : "",
-              }}
             >
               {t("All")}
             </button>
@@ -157,15 +164,12 @@ const Restaurant: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`whitespace-nowrap mx-2 px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${
+                className={`whitespace-nowrap border-2 border-transparent text-[16px] mx-2 px-4 py-2 rounded-full text-sm font-medium focus:outline-none transition-colors duration-200 ${
                   activeTab === tab.id
-                    ? " text-white"
-                    : "bg-slate-100 text-gray-900 "
+                    ? "border-white bg-white text-black font-semibold"
+                    : "text-white"
                 }`}
-                style={{
-                  backgroundColor:
-                    activeTab === tab.id ? query?.data?.theme?.primary : "",
-                }}
+                
               >
                 {t(tab.name)}
               </button>
@@ -178,7 +182,7 @@ const Restaurant: React.FC = () => {
             <img src={query?.data?.image} alt={query?.data?.name} className="w-full object-contain" />
           </div>
         </div> */}
-        <div className=" h-[calc(100vh-250px)] space-y-4 mt-4 ">
+        <div className=" h-[calc(100vh-250px)] overflow-y-scroll space-y-4 mt-4 pb-8 ">
           {searchQuery?.trim() ? (
             filteredItems?.length > 0 ? (
               filteredItems?.map((item) => (
