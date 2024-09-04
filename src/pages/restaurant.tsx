@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ChevronsRight, Globe, Search } from "lucide-react";
+import {  Globe, Search } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
