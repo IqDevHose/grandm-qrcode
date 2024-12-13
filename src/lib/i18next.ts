@@ -31,7 +31,7 @@ i18n
         },
         // Backend options for fetching translations
         backend: {
-            loadPath: `http://localhost:3000/locales/{{lng}}.json`, // Adjust the path based on your backend setup
+            loadPath: `https://menu.ecoefrskjvndlkrjhbdb.xyz/locales/{{lng}}.json`, // Adjust the path based on your backend setup
         },
         // Enable debug mode
         // debug: true,
